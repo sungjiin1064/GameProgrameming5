@@ -115,35 +115,37 @@ int main()
 		{
 			monsters.emplace_back(sx, sy, path);
 		}
+
+		for (int i = 0; i < monsters.size(); i++)
+		{
+			Monster& monster = monsters[i];
+
+			if (monster.step >= monster.direction.size()) continue;
+
+			GoToXY(monster.prev_x, monster.prev_y);
+			cout << "  ";
+
+			int dir = monster.direction[monster.step];
+			monster.x += dx[dir];
+			monster.y += dy[dir];
+			monster.prev_x = monster.x;
+			monster.prev_y = monster.y;
+			monster.step++;
+
+			GoToXY(monster.x, monster.y);
+			cout << "¡Ú";
+
+			Sleep(500);
+		}
 	}
 	
-	GoToXY(sx, sy);
+	/*GoToXY(sx, sy);
 	cout << "¡Ú";
 
 	int pre_x = sx;
-	int pre_y = sy;
+	int pre_y = sy;*/
 
-	for (int i = 0; i < monsters.size(); i++)
-	{
-		Monster& monster = monsters[i];
-
-		if (monster.step >= monster.direction.size()) continue;
-
-		GoToXY(monster.prev_x, monster.prev_y);
-		cout << "  ";
-
-		int dir = monster.direction[monster.step];		
-		monster.x += dx[dir];
-		monster.y += dy[dir];
-		monster.prev_x = monster.x;
-		monster.prev_y = monster.y;
-		monster.step++;
-		
-		GoToXY(monster.x,monster.y);
-		cout << "¡Ú";
-
-		Sleep(500);
-	}
+	
 
 #pragma endregion
 }
