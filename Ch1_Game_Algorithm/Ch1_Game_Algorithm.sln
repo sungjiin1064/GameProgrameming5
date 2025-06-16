@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ch1_Game_Algorithm", "Ch1_G
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ch2_Basic_Sorting", "..\Ch2_Basic_Sorting\Ch2_Basic_Sorting.vcxproj", "{622C59DF-21DF-4500-91DE-533EA7074C0F}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ch3_Insert_Quick_Sort", "..\Ch3_Insert_Quick_Sort\Ch3_Insert_Quick_Sort.vcxproj", "{3287E703-F5E7-47E8-9B92-BF47AECDBC07}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -31,6 +33,14 @@ Global
 		{622C59DF-21DF-4500-91DE-533EA7074C0F}.Release|x64.Build.0 = Release|x64
 		{622C59DF-21DF-4500-91DE-533EA7074C0F}.Release|x86.ActiveCfg = Release|Win32
 		{622C59DF-21DF-4500-91DE-533EA7074C0F}.Release|x86.Build.0 = Release|Win32
+		{3287E703-F5E7-47E8-9B92-BF47AECDBC07}.Debug|x64.ActiveCfg = Debug|x64
+		{3287E703-F5E7-47E8-9B92-BF47AECDBC07}.Debug|x64.Build.0 = Debug|x64
+		{3287E703-F5E7-47E8-9B92-BF47AECDBC07}.Debug|x86.ActiveCfg = Debug|Win32
+		{3287E703-F5E7-47E8-9B92-BF47AECDBC07}.Debug|x86.Build.0 = Debug|Win32
+		{3287E703-F5E7-47E8-9B92-BF47AECDBC07}.Release|x64.ActiveCfg = Release|x64
+		{3287E703-F5E7-47E8-9B92-BF47AECDBC07}.Release|x64.Build.0 = Release|x64
+		{3287E703-F5E7-47E8-9B92-BF47AECDBC07}.Release|x86.ActiveCfg = Release|Win32
+		{3287E703-F5E7-47E8-9B92-BF47AECDBC07}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
