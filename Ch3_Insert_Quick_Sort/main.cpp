@@ -55,11 +55,11 @@ void quickSort(int data[], int start, int end)
 
 	while (i <= j)
 	{
-		while (data[i] <= data[pivot]) // 피벗보다 큰값을 만날때 까지  그 값을 찾아라
+		while (data[i] >= data[pivot]) // 피벗보다 큰값을 만날때 까지  그 값을 찾아라
 		{
 			i++; // 작은 때 계속 i를 증가해라
 		}
-		while (j > start && data[j] >= data[pivot]) // 피벗보다 작은값을 만날때 그 값을 선택해라
+		while (j > start && data[j] <= data[pivot]) // 피벗보다 작은값을 만날때 그 값을 선택해라
 		{
 			j--; // j의 값을 변경해주는 코드
 		}
@@ -87,7 +87,7 @@ void quickSort(int data[], int start, int end)
 
 void quickSort(std::vector<int>& nums, int start, int end)
 {
-	if (start > end)
+	if (start >= end)
 	{
 		return;
 	}
@@ -96,16 +96,33 @@ void quickSort(std::vector<int>& nums, int start, int end)
 	int i = start + 1;  
 	int j = end;        
 	int temp;
-	//         
-	while (nums[i]  nums[pivot])
+	while (i <= j)
 	{
-		i++;
+		while (nums[i] <= nums[pivot])
+		{
+			i++;
+		}
+		while (nums[j] > start && nums[j] >= nums[pivot])
+		{
+			j--;
+		}
+		if (i > j)
+		{
+			temp = nums[j];
+			nums[j] = nums[pivot];
+			nums[pivot] = temp;
+			//std::swap(nums[pivot],nums[j])
+		}
+		else
+		{
+			temp = nums[j];
+			nums[j] = nums[i];
+			nums[i] = temp;
+			//std::swap(nums[i], nums[j]);
+		}
+		quickSort(nums, start, j - 1);
+		quickSort(nums, j + 1, end);
 	}
-	while (nums[j] > start && nums[j]  nums[pivot])
-	{
-
-	}
-
 }
 
 #pragma endregion
@@ -138,12 +155,12 @@ int main()
 		cout << n << " ";
 	}
 
-	cout << endl;
+	/*cout << endl;
 	cout << "퀵 정렬 백터 형식" << endl;
 	std::vector<int> nums2 = { 4,3,6,5,8,10,9,7,1,2 };
 	quickSort(nums2, 0, nums2.size()-1);
 	for (int num : nums2)
 	{
 		cout << num << " ";
-	}
+	}*/
 }
