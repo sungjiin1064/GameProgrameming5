@@ -11,11 +11,6 @@ struct myPair
 	T2 second;
 };
 
-void UserDataSearch(std::vector<std::pair<int, string>>data, int userID)
-{
-
-}
-
 void LinearSearch(int arr[],int n, int target)
 {
 	for (int i = 0; i < n; i++)
@@ -121,6 +116,21 @@ void Example()
 	cout << "데이터가 존재합니다 : (" << data[4].second << ")" << endl;
 }
 
+bool UserDataSearch(std::vector<std::pair<int, string>>data, int userID)
+{
+	for (int i = 0; i < data.size(); i++)
+	{
+		if (data[i].first == userID)
+		{
+			cout << "닉네임 : "<< data[i].second <<endl;
+			return true;
+		}
+	}
+	cout << "유저 아이디에 해당하는 데이터가 없습니다." << endl;
+	return false;
+
+}
+
 int main()
 {
 	cout << "배열로 구현한 선형 탐색" << endl;
@@ -142,4 +152,17 @@ int main()
 	cout << "배열로 구현한 이진 탐색" << endl;
 	std::vector<int> data1 = { 0,2,4,5,9 };
 	BinarySearch(data1, 2);*/
+
+	cout << endl;
+	cout << "유저 아이디로 닉네임 검색하기 예제" << endl;
+	std::vector<std::pair<int, string>> data3;
+	data3.push_back({ 0,"AAA" });
+	data3.push_back({ 1,"BBB" });
+	data3.push_back({ 2,"CCC" });
+	data3.push_back({ 3,"DDD" });
+	if (UserDataSearch(data3, 3))
+	{
+		data3[3].second = "EEE";
+	}
+	
 }
