@@ -99,6 +99,74 @@ private:
 		return node;
 	}
 
+	Node* findMin(Node* node)
+	{
+		if (node == nullptr || node->leftNode == nullptr)
+		{
+			return node;
+		}
+
+		return findMin(node->leftNode);
+	}
+
+	Node* findMax(Node* node)
+	{
+		if (node == nullptr || node->rightNode== nullptr)
+		{
+			return node;
+		}
+
+		return findMax(node->rightNode);
+	}
+
+	Node* deleteNode(Node* node, int target)
+	{
+		if (node == nullptr)  return nullptr;
+
+		if (node->value > target)
+		{
+			node->leftNode = deleteNode(node->leftNode, target);
+		}
+		else if (node->value < target)
+		{
+			node->rightNode = deleteNode(node->rightNode, target);
+		}
+		else
+		{
+			//if (node->leftNode == nullptr && node->rightNode == nullptr);
+			//if (node->leftNode == nullptr);
+			//if (node->rightNode == nullptr);
+
+			if (node->leftNode == nullptr || node->rightNode == nullptr)
+			{
+				Node* temp = node->leftNode != nullptr ? node->leftNode : node->rightNode;
+
+				if (temp == nullptr) // 자식이 없는 경우
+				{
+					temp = node;
+					node = nullptr;
+				}
+				else
+				{
+					node = temp;
+				}
+			}
+			else // 자식이 둘인 경우
+			{
+				//Node* temp =  findMin(node->rightNode);
+				//node->value = temp->value;
+				//node->rightNode = deleteNode(node->rightNode, temp->value);
+
+				Node* temp = findMax(node->leftNode);
+				node->value = temp->value;
+				node->leftNode = deleteNode(node->leftNode, temp->value);
+			}
+		}
+
+		return node;
+				
+	}
+
 	void inOrder(Node* node)
 	{
 		if (node == nullptr) return;
@@ -124,6 +192,12 @@ public:
 		inOrder(root);	
 		cout << endl;
 	}
+
+	void DeleteNode(int value)
+	{
+		root = deleteNode(root, value);
+	}
+
 };
 	
 
@@ -139,10 +213,16 @@ int main()
 	bst.insert(4);
 	bst.insert(2);
 	bst.insert(6);
-	bst.inOrder();
+	//bst.inOrder();
 	bst.insert(9);
 	bst.insert(7);
 	bst.insert(1);
+	bst.insert(5);
+	bst.insert(8);
+	bst.inOrder();
+
+	cout << "\n데이터 삭제 후 결과 예시" << endl;
+	bst.DeleteNode(6);
 	bst.inOrder();
 
 }
