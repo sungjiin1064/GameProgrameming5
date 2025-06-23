@@ -16,7 +16,7 @@ void EmergencyExample()
 
 	for (int i = 0; i < people.size(); i++)
 	{
-		sheets.insert({ i,people[i] });
+		sheets.insert({people[i],i });
 	}
 	//sheets.insert(0, { people[0] });
 	//sheets.insert(1, { people[1] });
@@ -30,8 +30,8 @@ void EmergencyExample()
 	for (int i = 0; i < people.size(); i++)
 	{
 		auto it = sheets.find(people[people.size() - 1 - i]);
-		int key = it;
-		answer[key] = i + 1;
+		int index = it->second;
+		answer[index] = i + 1;
 	}
 	
 	cout << "[";

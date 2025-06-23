@@ -145,10 +145,13 @@ private:
 				{
 					temp = node;
 					node = nullptr;
+					delete temp;
 				}
 				else
 				{
+					Node* nodeToDelete = node;
 					node = temp;
+					delete nodeToDelete;
 				}
 			}
 			else // 자식이 둘인 경우
@@ -198,6 +201,10 @@ public:
 		root = deleteNode(root, value);
 	}
 
+	void ReturnRoot()
+	{
+		cout << "루트에 저장된 값 : " << root->value << endl;
+	}
 };
 	
 
