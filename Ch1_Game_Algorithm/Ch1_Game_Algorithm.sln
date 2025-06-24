@@ -19,6 +19,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ch7_kthFind", "..\Ch7_kthFi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ch8_Heap", "..\Ch8_Heap\Ch8_Heap.vcxproj", "{9EB904DE-DA8D-4D16-93F1-9C8FAADE03B2}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ch9_Threat System", "..\Ch9_Threat System\Ch9_Threat System.vcxproj", "{3B7BF4E9-F69E-4BA7-A47C-971E7AE2B7F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -91,6 +93,14 @@ Global
 		{9EB904DE-DA8D-4D16-93F1-9C8FAADE03B2}.Release|x64.Build.0 = Release|x64
 		{9EB904DE-DA8D-4D16-93F1-9C8FAADE03B2}.Release|x86.ActiveCfg = Release|Win32
 		{9EB904DE-DA8D-4D16-93F1-9C8FAADE03B2}.Release|x86.Build.0 = Release|Win32
+		{3B7BF4E9-F69E-4BA7-A47C-971E7AE2B7F0}.Debug|x64.ActiveCfg = Debug|x64
+		{3B7BF4E9-F69E-4BA7-A47C-971E7AE2B7F0}.Debug|x64.Build.0 = Debug|x64
+		{3B7BF4E9-F69E-4BA7-A47C-971E7AE2B7F0}.Debug|x86.ActiveCfg = Debug|Win32
+		{3B7BF4E9-F69E-4BA7-A47C-971E7AE2B7F0}.Debug|x86.Build.0 = Debug|Win32
+		{3B7BF4E9-F69E-4BA7-A47C-971E7AE2B7F0}.Release|x64.ActiveCfg = Release|x64
+		{3B7BF4E9-F69E-4BA7-A47C-971E7AE2B7F0}.Release|x64.Build.0 = Release|x64
+		{3B7BF4E9-F69E-4BA7-A47C-971E7AE2B7F0}.Release|x86.ActiveCfg = Release|Win32
+		{3B7BF4E9-F69E-4BA7-A47C-971E7AE2B7F0}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
