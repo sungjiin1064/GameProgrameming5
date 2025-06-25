@@ -33,7 +33,7 @@ private:
 
 	void heapifyup(Node* node)
 	{
-		while (node->value > node->parentNode->value && node->parentNode)
+		while (node->parentNode != nullptr && node->value > node->parentNode->value)
 		{
 			std::swap(node->value, node->parentNode->value);
 			node = node->parentNode;
@@ -182,7 +182,35 @@ public:
 		heapifydown(root);
 
 		return MaxValue;
+	}
 
+	std::vector<int> toArray()
+	{
+		std::vector<int> result;
+
+		if (!root) return result;
+
+		std::queue<Node*> q;
+		q.push(root);
+
+		while (!q.empty())
+		{
+			Node* node = q.front();
+			q.pop();
+			result.push_back(node->value);
+			if (node->leftNode)
+			{
+				q.push(node->leftNode);
+			}
+			if (node->rightNode)
+			{
+				q.push(node->rightNode);
+			}
+
+			
+		}
+
+		return result;
 	}
 };
 
@@ -197,13 +225,26 @@ int main()
 	mHeap.insert(5);
 	mHeap.insert(11);
 
+	cout << "Heap자료구조의 트리 저장 순서대로 출력하는 예제" << endl;
+	std::vector<int> tempV =  mHeap.toArray();
+
+	for (auto& data : tempV)
+	{
+		cout << data << " ";
+	}
+	cout << endl;
+
 	cout << "가장 큰 수를 반환하고 다사시 Heap 정렬 하는 예제" << endl;
 	int maxValue = mHeap.extractMax();
+	int k = 2;
 	int kthValue;
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < k-1; i++)      ///////////////////////////
 	{
 		kthValue = mHeap.extractMax();
+		
 	}
+
+	cout << "k번째로 큰 수는 : " << kthValue <<endl;
 
 }
