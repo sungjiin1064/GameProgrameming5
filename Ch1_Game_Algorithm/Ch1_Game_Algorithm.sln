@@ -23,6 +23,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ch9_Threat System", "..\Ch9
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ch10_Graph", "..\Ch10_Graph\Ch10_Graph.vcxproj", "{76ED19EE-5649-4BDC-B038-F073CDDEF30C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Ch11_ Graph_Traverse", "..\Ch11_ Graph_Traverse\Ch11_ Graph_Traverse.vcxproj", "{2E792513-C51D-4B25-A2EE-7FBFC71CC74D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -111,6 +113,14 @@ Global
 		{76ED19EE-5649-4BDC-B038-F073CDDEF30C}.Release|x64.Build.0 = Release|x64
 		{76ED19EE-5649-4BDC-B038-F073CDDEF30C}.Release|x86.ActiveCfg = Release|Win32
 		{76ED19EE-5649-4BDC-B038-F073CDDEF30C}.Release|x86.Build.0 = Release|Win32
+		{2E792513-C51D-4B25-A2EE-7FBFC71CC74D}.Debug|x64.ActiveCfg = Debug|x64
+		{2E792513-C51D-4B25-A2EE-7FBFC71CC74D}.Debug|x64.Build.0 = Debug|x64
+		{2E792513-C51D-4B25-A2EE-7FBFC71CC74D}.Debug|x86.ActiveCfg = Debug|Win32
+		{2E792513-C51D-4B25-A2EE-7FBFC71CC74D}.Debug|x86.Build.0 = Debug|Win32
+		{2E792513-C51D-4B25-A2EE-7FBFC71CC74D}.Release|x64.ActiveCfg = Release|x64
+		{2E792513-C51D-4B25-A2EE-7FBFC71CC74D}.Release|x64.Build.0 = Release|x64
+		{2E792513-C51D-4B25-A2EE-7FBFC71CC74D}.Release|x86.ActiveCfg = Release|Win32
+		{2E792513-C51D-4B25-A2EE-7FBFC71CC74D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
