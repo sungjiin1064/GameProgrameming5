@@ -213,22 +213,25 @@ public:
 
 int main()
 {
-	//Graph g(4);
-	//g.addEdge(0, 1);
-	//g.addEdge(0, 2);
-	//g.addEdge(0, 3);
-	//g.addEdge(1, 2);
-	//g.addEdge(1, 3);
 	Graph g(4);
 	g.addEdge(0, 1);
 	g.addEdge(0, 2);
+	g.addEdge(0, 3);
+	g.addEdge(1, 2);
 	g.addEdge(1, 3);
-	g.addEdge(2, 4);
-	g.addEdge(2, 5);
-	g.DFSTraverse(2);
-	g.DFSIterTraverse(2);
-	g.BFSIterTraverse(0);
+	g.DFSTraverse(3);
+	g.DFSIterTraverse(3);
 	g.PrintGraph();
+	//Graph g(4);
+	//g.addEdge(0, 1);
+	//g.addEdge(0, 2);
+	//g.addEdge(1, 3);
+	//g.addEdge(2, 4);
+	//g.addEdge(2, 5);
+	//g.DFSTraverse(2);
+	//g.DFSIterTraverse(2);
+	//g.BFSIterTraverse(0);
+	//g.PrintGraph();
 
 	GraphMatrix gm(4);
 	gm.addEdge(0, 1);
@@ -236,6 +239,6 @@ int main()
 	gm.addEdge(0, 3);
 	gm.addEdge(1, 2);
 	gm.addEdge(1, 3);
-
 	gm.PrintGraph();
+
 }
