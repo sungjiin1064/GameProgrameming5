@@ -29,7 +29,7 @@ private:
 public:
 	Spire() : nodeCount(0) {}
 
-	void addNode(string _name, int x=0, int y=0)
+	void addNode(string _name, int x = 0, int y = 0)
 	{
 		nodes.emplace_back(_name, nodeCount, x, y);
 		adj.push_back(vector<int>());
@@ -125,31 +125,30 @@ public:
 		return refindPath(parent, start, end);
 	}
 
-	private:
-		void calculateNodePos() 
+private:
+	void calculateNodePos()
+	{
+		if (nodeCount == 0) return;
+
+		vector<vector<int>> levels;  // 던전의 층을 저장하는 컨테이너
+		vector<bool> processed(nodeCount, false);      // 방문한 노드를 기록
+
+		levels.push_back({ 0 });   // 시작지점 : 0층은 항상 0이다.
+		processed[0] = true;       // 시작지점은 방문했습니다.
+
+		int currentLevel = 0;
+		while (currentLevel < levels.size())
 		{
-			if (nodeCount == 0) return;
+			vector<int> nextLevel;
 
-			vector<vector<int>> levels;  // 던전의 층을 저장하는 컨테이너
-			vector<bool> processed(nodeCount, false);      // 방문한 노드를 기록
-
-			levels.push_back({ 0 });   // 시작지점 : 0층은 항상 0이다.
-			processed[0] = true;       // 시작지점은 방문했습니다.
-
-			int currentLevel = 0;
-			while (currentLevel < levels.size())
+			for (int node : levels[currentLevel])
 			{
-				vector<int> nextLevel;
-
-				for (int node : levels[currentLevel])
+				for (int neighbor : adj[node])
 				{
-					for (int neighbor : adj[node])
+					if (!processed[neighbor])
 					{
-						if (!processed[neighbor])
-						{
-							nextLevel.push_back(neighbor);
-							processed[neighbor] = true;
-						}
+						nextLevel.push_back(neighbor);
+						processed[neighbor] = true;
 					}
 				}
 
@@ -159,106 +158,110 @@ public:
 				}
 				currentLevel++;  // 다음층을 계산하시오.
 			}
-
-			for (int level = 0;level < levels.size();level++)  // 0층 ~ 마지막 층 반복
-			{ 
-				int nodeLevel = levels[level].size();          // 각 층의 방의 갯수
-				int spacing = CONSOLEHEIGHT / (nodeLevel + 1);
-
-				for (int i = 0; i < nodeLevel;i++)
-				{
-					int nodeId = levels[level][i];
-					nodes[nodeId].x = spacing * (i + 1);
-					nodes[nodeId].y = level * 2 + 2;
-				}
-			}
-			
-
 		}
-		void DrawCircle(vector<vector<char>>& screen, int x,int y)
+
+		for (int level = 0;level < levels.size();level++)  // 0층 ~ 마지막 층 반복
 		{
-			screen[y][x] = '0';
-		}
-		void DrawLine(vector<vector<char>>& screen, int x1, int y1, int x2, int y2)
-		{
-			int dx = abs(x2 - x1);
-			int dy = abs(y1 - y1);
+			int nodeLevel = levels[level].size();          // 각 층의 방의 갯수
+			int spacing = CONSOLEHEIGHT / (nodeLevel + 1);
 
-			int sx = (x1 < x2) ? 1 : -1;
-			int sy = (y1 < y2) ? 1 : -1;
-
-			int err = dx - dy;
-
-			int x = x1;
-			int y = y1;
-
-			while (true)
+			for (int i = 0; i < nodeLevel;i++)
 			{
-				if (x >= 0 && x < CONSOLEWIDTH && y >= 0 && y < CONSOLEHEIGHT)
-				{
-					if (screen[y][x] == ' ')
-					{
-						screen[y][x] = '-';
-					}
-					if (x == x2 && y == y2)
-					{
-						break;
-					}
-
-					int e2 = 2 * err;
-					if (e2 > -dy)
-					{
-						
-					}
-					if (e2 < dx)
-					{
-
-					}
-				}
+				int nodeId = levels[level][i];
+				nodes[nodeId].x = spacing * (i + 1);
+				nodes[nodeId].y = level * 2 + 2;
 			}
 		}
-		void DrawEdge(vector<vector<char>>& screen)
+
+
+	}
+
+	void DrawCircle(vector<vector<char>>& screen, int x, int y)
+	{
+		screen[y][x] = '0';
+	}
+
+	void DrawLine(vector<vector<char>>& screen, int x1, int y1, int x2, int y2)
+	{
+		int dx = abs(x2 - x1);
+		int dy = abs(y1 - y1);
+
+		int sx = (x1 < x2) ? 1 : -1;
+		int sy = (y1 < y2) ? 1 : -1;
+
+		int err = dx - dy;
+
+		int x = x1;
+		int y = y1;
+
+		while (true)
 		{
-			for (int i = 0;i < nodeCount;i++)
+			if (x >= 0 && x < CONSOLEWIDTH && y >= 0 && y < CONSOLEHEIGHT)
 			{
-				for (int neighbor : adj[i])
+				if (screen[y][x] == ' ')
 				{
-					DrawLine(screen, nodes[i].x, nodes[i].y, nodes[neighbor].x, nodes[neighbor].y);
+					screen[y][x] = '-';
+				}
+				if (x == x2 && y == y2)
+				{
+					break;
+				}
+
+				int e2 = 2 * err;
+				if (e2 > -dy)
+				{
+					err -= dy;
+					x += sx;
+				}
+				if (e2 < dx)
+				{
+					err += dx;
+					y += sy;
 				}
 			}
 		}
-		void DrawNode(vector<vector<char>>& screen)
+	}
+	void DrawEdge(vector<vector<char>>& screen)
+	{
+		for (int i = 0;i < nodeCount;i++)
 		{
-			for (int i = 0;i < nodeCount;i++)
+			for (int neighbor : adj[i])
 			{
-				DrawCircle(screen, nodes[i].x, nodes[i].y);
+				DrawLine(screen, nodes[i].x, nodes[i].y, nodes[neighbor].x, nodes[neighbor].y);
 			}
 		}
-		void printScreen(vector<vector<char>>& screen)
+	}
+	void DrawNode(vector<vector<char>>& screen)
+	{
+		for (int i = 0;i < nodeCount;i++)
 		{
+			DrawCircle(screen, nodes[i].x, nodes[i].y);
+		}
+	}
+	void printScreen(vector<vector<char>>& screen)
+	{
+		cout << endl;
+		for (int y = 0;y < CONSOLEHEIGHT;y++)
+		{
+			for (int x = 0;x < CONSOLEWIDTH;x++)
+			{
+				cout << screen[y][x];
+			}
 			cout << endl;
-			for (int y = 0;y < CONSOLEHEIGHT;y++)
-			{
-				for (int x = 0;x < CONSOLEWIDTH;x++)
-				{
-					cout << screen[y][x];
-				}
-			}
-
-
-			cout << endl;
 		}
+		cout << endl;
+	}
 
-	public:
-		void drawGraph()
-		{
-			vector<vector<char>> screen(CONSOLEHEIGHT, vector<char>(CONSOLEWIDTH, ' '));
+public:
+	void drawGraph()
+	{
+		vector<vector<char>> screen(CONSOLEHEIGHT, vector<char>(CONSOLEWIDTH, ' '));
 
-			calculateNodePos();
-			DrawEdge();
-			DrawNode();
-			printScreen();
-		}
+		calculateNodePos();
+		DrawEdge(screen);
+		DrawNode(screen);
+		printScreen(screen);
+	}
 
 
 };
@@ -266,7 +269,7 @@ public:
 int main()
 {
 	Spire spire;
-	
+
 	cout << "슬레이더 스파이어의 맵 노드 구현" << endl;
 
 	spire.addNode("시작");       // 0
@@ -292,9 +295,9 @@ int main()
 
 	spire.addEdge(0, 1); spire.addEdge(1, 6); spire.addEdge(6, 11); spire.addEdge(11, 15); spire.addEdge(15, 16);
 
-	spire.addEdge(0, 2); spire.addEdge(2, 7); spire.addEdge(7, 11); 
+	spire.addEdge(0, 2); spire.addEdge(2, 7); spire.addEdge(7, 11);
 
-	spire.addEdge(0, 3); spire.addEdge(3, 8); spire.addEdge(8, 12); spire.addEdge(12, 15); 
+	spire.addEdge(0, 3); spire.addEdge(3, 8); spire.addEdge(8, 12); spire.addEdge(12, 15);
 	spire.addEdge(3, 9); spire.addEdge(9, 12);
 
 	spire.addEdge(0, 4); spire.addEdge(4, 9); spire.addEdge(9, 13); spire.addEdge(13, 15);
