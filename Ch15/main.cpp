@@ -130,16 +130,42 @@ public:
 		return maxWeight < currentWeight + addItem.GetWeight();
 	}
 
-	int findBestItem(int targetWeight, std::vector<ItemW>& selectableItems)
+	std::pair<int,std::vector<ItemW>> findBestItem(int targetWeight, std::vector<ItemW>& selectableItems)
 	{
 		std::vector<int> dp(targetWeight + 1, 0);
 
+		std::vector<std::vector<bool>> selected(selectableItems.size(), std::vector<bool>(targetWeight + 1, false));
+
 		for (int i = 0;i < selectableItems.size();i++)
 		{
-			int weight = selectableItems///////////////////////////////
+			int weight = selectableItems[i].GetWeight();
+			int value = selectableItems[i].GetValue();
+
+			for (int w = targetWeight; w >= weight; w--)
+			{
+				if (dp[w - weight] + value > dp[w])
+				{
+					dp[w] = dp[w - weight] + value;
+					selected[i][w] = true;
+				}
+			}
+		}
+		
+		std::vector<ItemW> bestItems;
+		int w = targetWeight;
+
+		for (int i = selectableItems.size() - 1; i >= 0 && w > 0;i--)
+		{
+			if (selected[i][w])
+			{
+				bestItems.push_back(selectableItems[i]);
+				w -= selectableItems[i].GetWeight();
+			}
 		}
 
+		return std::make_pair(dp[targetWeight], bestItems);
 	}
+
 	std::vector<ItemW>& GetInventory() { return Items; }
 };
 
@@ -153,17 +179,31 @@ void InventoryWeightSystem()
 	ItemW D("D", 5, 12);
 
 	std::vector<ItemW> selectableTable{A, B, C, D};
-	cout<<"주어진 아이템의 최대 가치 :   /////////////////////////////////////////
 
-	inventory.AddItem(A);
-	inventory.AddItem(B);
+	std::pair<int,std::vector<ItemW>> bestitems = inventory.findBestItem(7, selectableTable);
+
+	cout << "주어진 아이템의 최대 가치 : " << bestitems.first <<endl;
+
+	std::vector<ItemW> ItemC = bestitems.second;
+
+	int i = 0;
+
+	for (auto& item : ItemC)
+	{
+		i++;
+		cout << i << "번째 아이템의 이름 : " << item.GetName() << ", 무게 : " << item.GetWeight() << ", 가치 : " << item.GetValue() << endl;
+		inventory.AddItem(item);
+	}
+	
+	//inventory.AddItem(A);
+	//inventory.AddItem(B);
 
 	int index = 0;
 
 	for (auto& item : inventory.GetInventory())
 	{
 		index++;
-		cout << index << "번째 아이템 : " << item.GetName() << " , 무게 : " << item.GetWeight();
+		cout << index << "번째 아이템 : " << item.GetName() << " , 무게 : " << item.GetWeight() << endl;
 	}
 }
 
