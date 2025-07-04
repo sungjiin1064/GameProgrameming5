@@ -2,6 +2,9 @@
 #include <iostream>
 #include <vector>
 #include <Windows.h>
+#include <InventoryDP.h>
+#include <queue>
+#include <string>
 
 using namespace std;
 
@@ -68,25 +71,167 @@ void PrintProgressBar(int current, int total, int width = 30)
 
 void LoadingAnimation()
 {
+	const int total = 3;
+	const int width = 30;
+
 	cout << "로딩 진행 현황을 그려준다." << endl;
-	for (int i = 0;i < 20;i++)
+	for (int i = 0;i <= total;i++)
 	{
-		PrintProgressBar(i, 20);
-		cout << endl;
+		system("cls");
+		PrintProgressBar(i, total, width);
 		cout.flush();
 		Sleep(100);
 	}
 	//system("cls");
 }
 
-void DrawBox()
+void DrawBox(int width, int height)
 {
-	cout << Color::BG_CYAN << "+------------+" << Color::RESET<<endl;
-	cout << "|            |" << endl;
-	cout << "|            |" << endl;
-	cout << "|            |" << endl;
-	cout << "|            |" << endl;
-	cout << "+------------+" << endl;
+
+	cout << Color::BG_CYAN << "+";
+	
+	for (int i = 0;i < width;i++)
+	{
+		cout << "-";
+	}
+	cout << "+" << Color::RESET << endl;
+
+	for (int y = 0;y < height;y++)
+	{
+		Color::Print(Color::BG_CYAN, Color::WHITE, "|");
+		for (int i = 0;i <width ;i++)
+		{
+			cout << " ";
+		}
+		Color::Print(Color::BG_CYAN, Color::WHITE, "|");
+		cout << endl;
+	}
+
+	cout << Color::BG_CYAN << "+";
+	for (int i = 0;i < width;i++)
+	{
+		cout<<"-";
+	}
+	cout << "+" << Color::RESET << endl;
+
+
+}
+
+void gotoXY(int x, int y)
+{
+	COORD pos{ x,y };
+	SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+}
+
+void DrawBox(int px, int py, int width, int height, const ItemW& item)
+{
+	gotoXY(px, py);
+	cout << Color::BG_CYAN << "+";
+
+	for (int i = 0;i < width;i++)
+	{
+		cout << "-";
+	}
+	cout << "+" << Color::RESET << endl;
+		
+	for (int y = 0;y < height;y++)
+	{
+		gotoXY(px, py + 1 + y);
+		// 왼쪽벽
+		Color::Print(Color::BG_CYAN, Color::WHITE, "|");
+
+		string content = "";
+
+		if (y == 1)
+		{
+			content = " 이름 : " + item.GetName();
+		}
+		else if (y == 2)
+		{
+			content = " 무게 : " + to_string(item.GetWeight());  /////////
+		}
+		else if (y == 3)
+		{
+			content = " 가치 : " + to_string(item.GetValue());
+		}
+
+		if (!content.empty())
+		{
+			cout << Color::CYAN << content;
+
+			for (int i = content.length();i < width;i++)
+			{
+				cout << " ";
+			}
+		}
+		else
+		{
+			// 공백
+			for (int i = 0;i < width;i++)
+			{
+				cout << " ";
+			}
+		}
+
+		
+
+		// 오른쪽 벽
+		Color::Print(Color::BG_CYAN, Color::WHITE, "|");
+		cout << endl;
+	}
+
+	gotoXY(px, py+ height+1);
+	cout << Color::BG_CYAN << "+";
+	for (int i = 0;i < width;i++)
+	{
+		cout << "-";
+	}
+	cout << "+" << Color::RESET << endl;
+
+}
+
+void TestI(const ItemW& item)
+{
+	cout << item.GetName() << endl;
+}
+
+void ProcedualDrawBox(int startX, int startY, std::vector<ItemW>& items)
+{
+	queue<ItemW> itemQueue;
+
+	for (auto& item : items)
+	{
+		itemQueue.push(item);
+	}
+
+	int currentRow = 0;
+	int currentCol = 0;
+
+	const int Box_Width = 20;
+	const int Box_Height = 10;
+	const int Box_RowSpacing = 5;
+	const int Box_ColSpacing = 5;
+
+	while (!itemQueue.empty())
+	{
+		ItemW currentItem = itemQueue.front();
+		itemQueue.pop();
+		
+		int boxX = startX + (currentRow * (Box_RowSpacing + Box_Width));
+		int boxY = startY + (currentCol * (Box_ColSpacing + Box_Height));
+
+		DrawBox(boxX, boxY, Box_Width, Box_Height, currentItem);
+
+		currentRow++;
+
+		if (currentRow >= 3)
+		{
+			currentRow = 0;
+			currentCol++;
+		}
+
+		Sleep(100);
+	}
 }
 
 // 30~ 39 글자색, 40~44 배경색
@@ -101,11 +246,24 @@ int main()
 	//Color::Print(Color::BG_BLUE, Color::GREEN, "===TITLE===");
 
 	PrintMenu();
+	LoadingAnimation();
 
-	for (int i = 0;i < 100;i++)
-	{
-		PrintProgressBar(i, 100);
-	}
+	InventoryW inventory(7);
 
+	ItemW A("A", 6, 13);
+	ItemW B("B", 4, 8);
+	ItemW C("C", 3, 6);
+	ItemW D("D", 5, 12);
+
+	std::vector<ItemW> selectableTable{ A, B, C, D };
+
+	std::pair<int, std::vector<ItemW>> bestitems = inventory.findBestItem(7, selectableTable);
+
+	cout << endl;
+	cout << "주어진 아이템의 최대 가치 : " << bestitems.first << endl;
+
+	std::vector<ItemW> ItemC = bestitems.second;
+
+	ProcedualDrawBox(5,5,ItemC);
 
 }
